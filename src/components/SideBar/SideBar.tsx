@@ -98,8 +98,8 @@ export function AppSidebar() {
             <div className="flex gap-4">
               <div className="bg-green-600 text-sm px-3 py-1 rounded-full mb-6">
                 <Link
-                  download={"resume.pdf"}
-                  to="./resume.pdf"
+                  download={"AdityaPandey.pdf"}
+                  to="./Aditya_Pandey_Resume.pdf"
                   target="_blank"
                   className="cursor-pointer"
                 >
