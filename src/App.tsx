@@ -13,6 +13,11 @@ function App() {
       textColor: "#fff",
       links: [
         {
+          label: "Home",
+          href: "/",
+          ariaLabel: "Home Page",
+        },
+        {
           label: "Me",
           href: "/about",
           ariaLabel: "About Me Page",

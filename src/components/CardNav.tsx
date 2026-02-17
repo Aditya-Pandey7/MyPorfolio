@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import { GoArrowUpRight } from "react-icons/go";
 import { Sun } from "lucide-react";
 import { useTheme } from "@/context/ThemeProvider";
+import { Link } from "react-router-dom";
 
 type CardNavLink = {
   label: string;
@@ -140,6 +141,14 @@ const CardNav: React.FC<CardNavProps> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, [isExpanded]);
 
+  const closeMenu = () => {
+    const tl = tlRef.current;
+    if (!tl || !isExpanded) return;
+    setIsHamburgerOpen(false);
+    tl.eventCallback("onReverseComplete", () => setIsExpanded(false));
+    tl.reverse();
+  };
+
   const toggleMenu = () => {
     const tl = tlRef.current;
     if (!tl) return;
@@ -148,9 +157,7 @@ const CardNav: React.FC<CardNavProps> = ({
       setIsExpanded(true);
       tl.play(0);
     } else {
-      setIsHamburgerOpen(false);
-      tl.eventCallback("onReverseComplete", () => setIsExpanded(false));
-      tl.reverse();
+      closeMenu();
     }
   };
 
@@ -220,18 +227,19 @@ const CardNav: React.FC<CardNavProps> = ({
               </div>
               <div className="nav-card-links mt-auto flex flex-col gap-[2px]">
                 {item.links?.map((lnk, i) => (
-                  <a
+                  <Link
                     key={`${lnk.label}-${i}`}
                     className="nav-card-link inline-flex items-center gap-[6px] no-underline cursor-pointer transition-opacity duration-300 hover:opacity-75 text-[15px] md:text-[16px]"
-                    href={lnk.href}
+                    to={lnk.href}
                     aria-label={lnk.ariaLabel}
+                    onClick={closeMenu}
                   >
                     <GoArrowUpRight
                       className="nav-card-link-icon shrink-0"
                       aria-hidden="true"
                     />
                     {lnk.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>

@@ -1,10 +1,10 @@
 export const projectData = [
   {
-    title: "CoininSight - Cryptocurrency Dashboard",
+    title: "The Movie DB",
     description:
-      "This is a brief description of Project One. It showcases the main features and technologies used.",
-    image: "./coininsights.avif",
-    link: "https://testingcoin-mu.vercel.app/",
+      "This is a movie database application that fetches data from TMDB API.",
+    image: "./TMDB.webp",
+    link: "https://tmdb-topaz-sigma.vercel.app/",
   },
   {
     title: "Mintra - E-commerce Platform",
@@ -12,6 +12,13 @@ export const projectData = [
       "This is a brief description of Project Two. It showcases the main features and technologies used.",
     image: "./ecom.avif",
     link: "https://myntra-jade.vercel.app/",
+  },
+  {
+    title: "CoininSight - Cryptocurrency Dashboard",
+    description:
+      "This is a brief description of Project One. It showcases the main features and technologies used.",
+    image: "./coininsights.avif",
+    link: "https://testingcoin-mu.vercel.app/",
   },
   {
     title: "Klimate",
