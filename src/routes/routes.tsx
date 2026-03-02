@@ -1,46 +1,23 @@
+import { createBrowserRouter } from "react-router";
+import { Home } from "@/pages/Home/Home";
 import App from "@/App";
-import About from "@/pages/About/About";
-import Blog from "@/pages/Blog/Blog";
-import Contact from "@/pages/Contact/Contact";
-import DetailProject from "@/pages/DetailProject/DetailProject";
-import Home from "@/pages/Home/Home";
-import Projects from "@/pages/Projects/Projects";
-import Stacks from "@/pages/Stacks/Stacks";
-import { createBrowserRouter } from "react-router-dom";
+import { Projects } from "@/pages/Projects/Projects";
+import { Stack } from "@/pages/Stacks/Stacks";
+import { Blogs } from "@/pages/Blog/Blog";
+import { Contact } from "@/pages/Contact/Contact";
+import Me from "@/pages/Me/ME";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/about",
-        element: <About />,
-      },
-      {
-        path: "/projects",
-        element: <Projects />,
-      },
-      {
-        path: "/stack",
-        element: <Stacks />,
-      },
-      {
-        path: "/project/detail-project/:projectName",
-        element: <DetailProject />,
-      },
-      {
-        path: "/contact",
-        element: <Contact />,
-      },
-      {
-        path : '/blog',
-        element : <Blog />
-      }
+      { index: true, element: <Home /> },
+      { path: "projects", element: <Projects /> },
+      { path: "stack", element: <Stack /> },
+      { path: "blogs", element: <Blogs /> },
+      { path: "contact", element: <Contact /> },
+      { path: "me", element: <Me /> },
     ],
   },
 ]);

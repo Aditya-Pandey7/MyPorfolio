@@ -199,12 +199,6 @@ const CardNav: React.FC<CardNavProps> = ({
             />
           </div>
 
-          <div>
-            <Sun
-              className="animate-pulse text-black mr-4 cursor-pointer"
-              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            />
-          </div>
         </div>
 
         <div

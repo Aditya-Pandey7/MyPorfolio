@@ -1,9 +1,11 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import "./App.css";
 import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
 import { AppSidebar } from "./components/SideBar/SideBar";
 import Footer from "./components/footer/Footer";
 import CardNav from "./components/CardNav";
+import Connect from "./components/connect/Connect";
+import { useEffect } from "react";
 
 function App() {
   const items = [
@@ -19,7 +21,7 @@ function App() {
         },
         {
           label: "Me",
-          href: "/about",
+          href: "/me",
           ariaLabel: "About Me Page",
         },
         {
@@ -53,7 +55,7 @@ function App() {
       links: [
         {
           label: "My Blogs",
-          href: "/blog",
+          href: "/blogs",
           ariaLabel: "Featured Blogs",
         },
       ],
@@ -64,28 +66,20 @@ function App() {
       textColor: "#fff",
       links: [
         {
-          label: "Email",
-          href: "mailto:adipandey830@gmail.com",
-          ariaLabel: "Email us",
-        },
-        {
-          label: "Twitter",
-          href: "https://x.com/adi_iox",
-          ariaLabel: "Twitter",
-        },
-        {
-          label: "LinkedIn",
-          href: "https://www.linkedin.com/in/aditya-pandey-070447233",
-          ariaLabel: "LinkedIn",
-        },
-        {
-          label: "GitHub",
-          href: "https://github.com/captain-adi",
-          ariaLabel: "GitHub",
+          label: "Contact Me",
+          href: "/contact",
+          ariaLabel: "Contact Me Page",
         },
       ],
     },
   ];
+
+  const {pathname} = useLocation();
+
+   useEffect(()=>{
+    window.scrollTo(0,0)
+   },[pathname])
+
   return (
     <>
       <SidebarProvider>
@@ -106,10 +100,11 @@ function App() {
               ease="power3.out"
             />
           </div>
-          <div className="px-6 container mx-auto flex-1">
+          <div className="flex-1">
             <SidebarTrigger className="absolute top-4 right-4 md:hidden " />
             <Outlet />
           </div>
+          <Connect />
           <Footer />
         </main>
       </SidebarProvider>
