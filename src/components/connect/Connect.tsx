@@ -1,9 +1,9 @@
+import { memo, useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import TextPressure from "@/reactbits/TextPressure/TextPressure";
 import { useTheme } from "@/context/ThemeProvider";
-import { useRef } from "react";
 
-function Connect() {
+const Connect = memo(function Connect() {
   const { theme } = useTheme();
   const containerRef = useRef(null);
   
@@ -89,8 +89,9 @@ function Connect() {
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full filter blur-[150px] -z-10" />
     </section>
   );
-}
+});
 
 export default Connect;
+
 
 

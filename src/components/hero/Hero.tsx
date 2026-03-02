@@ -162,9 +162,10 @@ export function Hero() {
                 className="w-full h-full"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1771567967255-d770c21a26be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjcmVhdGl2ZSUyMHdvcmtzcGFjZSUyMGFlc3RoZXRpYyUyMG1pbmltYWx8ZW58MXx8fHwxNzcyMDQyMDYxfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src="https://images.unsplash.com/photo-1771567967255-d770c21a26be?crop=entropy&cs=tinysrgb&fit=max&fm=webp&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjcmVhdGl2ZSUyMHdvcmtzcGFjZSUyMGFlc3RoZXRpYyUyMG1pbmltYWx8ZW58MXx8fHwxNzcyMDQyMDYxfDA&ixlib=rb-4.1.0&q=75&w=800&utm_source=figma&utm_medium=referral"
                   alt="Creative workspace"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </motion.div>
               <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 to-transparent" />
@@ -181,9 +182,10 @@ export function Hero() {
                 className="w-full h-full"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1542304807-c7d38f96e2d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXNpZ25lciUyMHdvcmtpbmclMjBsYXB0b3AlMjBjb2ZmZWV8ZW58MXx8fHwxNzcyMDQyMDYyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src="https://images.unsplash.com/photo-1542304807-c7d38f96e2d2?crop=entropy&cs=tinysrgb&fit=max&fm=webp&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXNpZ25lciUyMHdvcmtpbmclMjBsYXB0b3AlMjBjb2ZmZWV8ZW58MXx8fHwxNzcyMDQyMDYyfDA&ixlib=rb-4.1.0&q=75&w=600&utm_source=figma&utm_medium=referral"
                   alt="Designer working"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </motion.div>
               <div className="absolute inset-0 bg-gradient-to-t from-pink-500/20 to-transparent" />
@@ -201,9 +203,10 @@ export function Hero() {
                 className="w-full h-full"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1596716147725-bc96cc16147d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcmNoaXRlY3R1cmUlMjBhYnN0cmFjdHxlbnwxfHx8fDE3NzIwNDAyMTl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src="https://images.unsplash.com/photo-1596716147725-bc96cc16147d?crop=entropy&cs=tinysrgb&fit=max&fm=webp&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcmNoaXRlY3R1cmUlMjBhYnN0cmFjdHxlbnwxfHx8fDE3NzIwNDAyMTl8MA&ixlib=rb-4.1.0&q=75&w=500&utm_source=figma&utm_medium=referral"
                   alt="Modern architecture"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </motion.div>
               <div className="absolute inset-0 bg-gradient-to-t from-orange-500/20 to-transparent" />
@@ -224,9 +227,10 @@ export function Hero() {
                 className="w-full h-full"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1665764884116-11bf71512155?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2xvcmZ1bCUyMGdyYWRpZW50JTIwYWJzdHJhY3QlMjBhcnR8ZW58MXx8fHwxNzcyMDAxNzM2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src="https://images.unsplash.com/photo-1665764884116-11bf71512155?crop=entropy&cs=tinysrgb&fit=max&fm=webp&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2xvcmZ1bCUyMGdyYWRpZW50JTIwYWJzdHJhY3QlMjBhcnR8ZW58MXx8fHwxNzcyMDAxNzM2fDA&ixlib=rb-4.1.0&q=75&w=400&utm_source=figma&utm_medium=referral"
                   alt="Abstract gradient"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </motion.div>
               <div className="absolute inset-0 bg-gradient-to-t from-blue-500/20 to-transparent" />

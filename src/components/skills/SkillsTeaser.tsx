@@ -68,7 +68,7 @@ export function SkillsTeaser() {
               
               <div className="relative z-10">
                 <div className="p-4 w-fit rounded-2xl bg-gradient-to-br from-purple-500/10 to-transparent mb-6">
-                  <img src={skill.icon} alt={skill.title} className="w-12 h-12 object-contain" />
+                  <img src={skill.icon} alt={skill.title} className="w-12 h-12 object-contain" loading="lazy" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">{skill.title}</h3>
                 <p className="text-gray-500 text-sm font-medium leading-relaxed line-clamp-2">{skill.description}</p>

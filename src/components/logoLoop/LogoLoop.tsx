@@ -9,7 +9,8 @@ function LogoLoop() {
           <img
             key={index}
             src={data.icon}
-            alt=""
+            alt={data.title}
+            loading="lazy"
             className={`logo ${data.icon === "shadcn-ui.svg" ? "logo-bg" : ""}`}
           />
         ))}

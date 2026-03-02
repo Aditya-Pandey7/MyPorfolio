@@ -60,9 +60,10 @@ import { Link } from "react-router-dom";
                 className="w-full h-full"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1719400471588-575b23e27bd7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9ncmFtbWVyJTIwY29kaW5nJTIwZGFyayUyMHNldHVwfGVufDF8fHx8MTc3MjA0MzE1Nnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src="https://images.unsplash.com/photo-1719400471588-575b23e27bd7?crop=entropy&cs=tinysrgb&fit=max&fm=webp&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9ncmFtbWVyJTIwY29kaW5nJTIwZGFyayUyMHNldHVwfGVufDF8fHx8MTc3MjA0MzE1Nnww&ixlib=rb-4.1.0&q=75&w=800&utm_source=figma&utm_medium=referral"
                   alt="Developer coding"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </motion.div>
               <div className="absolute inset-0 bg-gradient-to-t from-purple-900/50 to-transparent" />
@@ -80,9 +81,10 @@ import { Link } from "react-router-dom";
                 className="w-full h-full"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1624948384140-e48e47087fad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXZlbG9wZXIlMjB3b3Jrc3BhY2UlMjBtdWx0aXBsZSUyMG1vbml0b3JzfGVufDF8fHx8MTc3MTk2MDc5MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src="https://images.unsplash.com/photo-1624948384140-e48e47087fad?crop=entropy&cs=tinysrgb&fit=max&fm=webp&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkZXZlbG9wZXIlMjB3b3Jrc3BhY2UlMjBtdWx0aXBsZSUyMG1vbml0b3JzfGVufDF8fHx8MTc3MTk2MDc5MHww&ixlib=rb-4.1.0&q=75&w=600&utm_source=figma&utm_medium=referral"
                   alt="Developer workspace"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </motion.div>
               <div className="absolute inset-0 bg-gradient-to-t from-pink-900/50 to-transparent" />

@@ -13,6 +13,7 @@ import {
   Sun,
 } from "lucide-react";
 
+import { memo } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -83,7 +84,7 @@ const socialLinks = [
   },
 ];
 
-export function AppSidebar() {
+export const AppSidebar = memo(function AppSidebar() {
   const { setTheme, theme } = useTheme();
   return (
     <Sidebar className=" w-72 p-0 border mr-1 " variant="inset">
@@ -91,9 +92,10 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent className="flex flex-col items-center p-6">
             <img
-              src="./profile.png  "
+              src="./profile.png"
               alt="profile"
               className="w-48 rounded-lg object-cover mb-4"
+              loading="lazy"
             />
             <div className="flex gap-4">
               <div className="bg-green-600 text-sm px-3 py-1 rounded-full mb-6">
@@ -159,4 +161,4 @@ export function AppSidebar() {
       </SidebarContent>
     </Sidebar>
   );
-}
+});

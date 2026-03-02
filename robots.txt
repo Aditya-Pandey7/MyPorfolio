@@ -1,0 +1,18 @@
+# robots.txt for MyPortfolio
+# Allow all robots complete access
+User-agent: *
+Disallow:
+
+# Block crawling of sensitive or unnecessary files
+Disallow: /private/
+Disallow: /admin/
+Disallow: /tmp/
+Disallow: /config/
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /public/stack/
+
+# Allow crawling of public assets
+Allow: /public/
+
+

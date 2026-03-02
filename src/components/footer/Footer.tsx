@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { motion } from "motion/react";
 import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 import { useTheme } from "@/context/ThemeProvider";
@@ -9,7 +10,7 @@ const socialLinks = [
   { icon: Mail, href: "mailto:adipandey830@gmail.com", label: "Email" },
 ];
 
-function Footer() {
+const Footer = memo(function Footer() {
   const { theme } = useTheme();
   
   return (
@@ -62,6 +63,7 @@ function Footer() {
       <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-purple-500/5 rounded-[100%] filter blur-[100px] pointer-events-none" />
     </footer>
   );
-}
+});
 
 export default Footer;
+
