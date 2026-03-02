@@ -2,7 +2,6 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 // use your own icon import if react-icons is not available
 import { GoArrowUpRight } from "react-icons/go";
-import { Sun } from "lucide-react";
 import { useTheme } from "@/context/ThemeProvider";
 import { Link } from "react-router-dom";
 
@@ -43,7 +42,6 @@ const CardNav: React.FC<CardNavProps> = ({
   const navRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
-  const { setTheme, theme } = useTheme();
 
   const calculateHeight = () => {
     const navEl = navRef.current;
@@ -198,7 +196,6 @@ const CardNav: React.FC<CardNavProps> = ({
               } group-hover:opacity-75`}
             />
           </div>
-
         </div>
 
         <div

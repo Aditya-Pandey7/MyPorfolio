@@ -5,7 +5,7 @@ import { Projects } from "@/pages/Projects/Projects";
 import { Stack } from "@/pages/Stacks/Stacks";
 import { Blogs } from "@/pages/Blog/Blog";
 import { Contact } from "@/pages/Contact/Contact";
-import Me from "@/pages/Me/ME";
+import Me from "@/pages/Me/Me";
 
 const router = createBrowserRouter([
   {
