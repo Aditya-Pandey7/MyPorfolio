@@ -105,6 +105,12 @@ const CardNav: React.FC<CardNavProps> = ({
     const tl = createTimeline();
     tlRef.current = tl;
 
+    // If the menu was already expanded when the timeline was recreated,
+    // ensure the new timeline is set to its end state.
+    if (isExpanded && tl) {
+      tl.progress(1);
+    }
+
     return () => {
       tl?.kill();
       tlRef.current = null;

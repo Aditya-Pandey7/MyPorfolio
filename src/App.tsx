@@ -7,78 +7,78 @@ import CardNav from "./components/CardNav";
 import Connect from "./components/connect/Connect";
 import { useEffect } from "react";
 
+const items = [
+  {
+    label: "About",
+    bgColor: "#0D0716",
+    textColor: "#fff",
+    links: [
+      {
+        label: "Home",
+        href: "/",
+        ariaLabel: "Home Page",
+      },
+      {
+        label: "Me",
+        href: "/me",
+        ariaLabel: "About Me Page",
+      },
+      {
+        label: "My Skills",
+        href: "/stack",
+        ariaLabel: "About My Skills Page",
+      },
+    ],
+  },
+  {
+    label: "Projects",
+    bgColor: "#170D27",
+    textColor: "#fff",
+    links: [
+      {
+        label: "Featured",
+        href: "/projects",
+        ariaLabel: "Featured Projects",
+      },
+      {
+        label: "Case Studies",
+        href: "#projects/case-studies",
+        ariaLabel: "Project Case Studies",
+      },
+    ],
+  },
+  {
+    label: "Blog",
+    bgColor: "#170D27",
+    textColor: "#fff",
+    links: [
+      {
+        label: "My Blogs",
+        href: "/blogs",
+        ariaLabel: "Featured Blogs",
+      },
+    ],
+  },
+  {
+    label: "Contact",
+    bgColor: "#271E37",
+    textColor: "#fff",
+    links: [
+      {
+        label: "Contact Me",
+        href: "/contact",
+        ariaLabel: "Contact Me Page",
+      },
+    ],
+  },
+];
+
 function App() {
-  const items = [
-    {
-      label: "About",
-      bgColor: "#0D0716",
-      textColor: "#fff",
-      links: [
-        {
-          label: "Home",
-          href: "/",
-          ariaLabel: "Home Page",
-        },
-        {
-          label: "Me",
-          href: "/me",
-          ariaLabel: "About Me Page",
-        },
-        {
-          label: "My Skills",
-          href: "/stack",
-          ariaLabel: "About My Skills Page",
-        },
-      ],
-    },
-    {
-      label: "Projects",
-      bgColor: "#170D27",
-      textColor: "#fff",
-      links: [
-        {
-          label: "Featured",
-          href: "/projects",
-          ariaLabel: "Featured Projects",
-        },
-        {
-          label: "Case Studies",
-          href: "#projects/case-studies",
-          ariaLabel: "Project Case Studies",
-        },
-      ],
-    },
-    {
-      label: "Blog",
-      bgColor: "#170D27",
-      textColor: "#fff",
-      links: [
-        {
-          label: "My Blogs",
-          href: "/blogs",
-          ariaLabel: "Featured Blogs",
-        },
-      ],
-    },
-    {
-      label: "Contact",
-      bgColor: "#271E37",
-      textColor: "#fff",
-      links: [
-        {
-          label: "Contact Me",
-          href: "/contact",
-          ariaLabel: "Contact Me Page",
-        },
-      ],
-    },
-  ];
+  const { pathname } = useLocation();
 
-  const {pathname} = useLocation();
-
-   useEffect(()=>{
-    window.scrollTo(0,0)
-   },[pathname])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <>
