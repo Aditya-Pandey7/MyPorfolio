@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
 import { useTheme } from "@/context/ThemeProvider";
+import { useProfile } from "@/context/ProfileContext";
 
 // Menu items.
 const items = [
@@ -60,32 +61,33 @@ const items = [
     icon: BookOpenTextIcon,
   },
 ];
-// Array of social links and icons
-const socialLinks = [
-  {
-    name: "Twitter",
-    icon: Twitter,
-    url: "https://twitter.com/yourprofile",
-  },
-  {
-    name: "LinkedIn",
-    icon: Linkedin,
-    url: "https://linkedin.com/in/yourprofile",
-  },
-  {
-    name: "WhatsApp",
-    icon: MessageCircleMore,
-    url: "https://wa.me/yourphonenumber",
-  },
-  {
-    name: "Instagram",
-    icon: Instagram,
-    url: "https://instagram.com/yourprofile",
-  },
-];
-
 export const AppSidebar = memo(function AppSidebar() {
   const { setTheme, theme } = useTheme();
+  const { profile } = useProfile();
+
+  // Array of social links and icons
+  const socialLinks = [
+    {
+      name: "Twitter",
+      icon: Twitter,
+      url: profile?.twitter_url || "https://twitter.com/yourprofile",
+    },
+    {
+      name: "LinkedIn",
+      icon: Linkedin,
+      url: profile?.linkedin_url || "https://linkedin.com/in/yourprofile",
+    },
+    {
+      name: "WhatsApp",
+      icon: MessageCircleMore,
+      url: `https://wa.me/${profile?.whatsapp_number || ""}`,
+    },
+    {
+      name: "Instagram",
+      icon: Instagram,
+      url: profile?.instagram_url || "https://instagram.com/yourprofile",
+    },
+  ];
   return (
     <Sidebar className=" w-72 p-0 border mr-1 " variant="inset">
       <SidebarContent>
@@ -99,17 +101,18 @@ export const AppSidebar = memo(function AppSidebar() {
             />
             <div className="flex gap-4">
               <div className="bg-green-600 text-sm px-3 py-1 rounded-full mb-6">
-                <Link
-                  download={"AdityaPandey.pdf"}
-                  to="./Aditya_Pandey_Resume.pdf"
+                <a
+                  href={profile?.resume_url || "/Aditya_Pandey_Resume.pdf"}
+                  download={`${profile?.full_name || "Aditya_Pandey"}_Resume.pdf`}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="cursor-pointer"
                 >
                   <span className="text-white flex items-center gap-1">
                     <Download size={14} className="animate-bounce" />
                     See My Resume
                   </span>
-                </Link>
+                </a>
               </div>
               <div>
                 <Sun

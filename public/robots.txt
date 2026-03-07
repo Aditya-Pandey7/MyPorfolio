@@ -15,4 +15,4 @@ Disallow: /public/stack/
 # Allow crawling of public assets
 Allow: /public/
 
-
+Sitemap: https://adityapandey.tech/sitemap.xml

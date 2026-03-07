@@ -1,8 +1,11 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, Sparkles, Zap, Star } from "lucide-react";
 import { useRef } from "react";
+import { useProfile } from "@/context/ProfileContext";
+import { Link } from "react-router-dom";
 
-export function Hero() {
+function Hero() {
+  const { profile } = useProfile();
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -123,24 +126,35 @@ export function Hero() {
               transition={{ duration: 0.8, delay: 1 }}
               className="flex flex-wrap gap-4"
             >
-              <motion.button
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 0 30px rgba(168, 85, 247, 0.4)",
-                }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-semibold flex items-center gap-2 shadow-lg"
+              <Link to="/projects">
+                <motion.button
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: "0 0 30px rgba(168, 85, 247, 0.4)",
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-semibold flex items-center gap-2 shadow-lg"
+                >
+                  View Portfolio
+                  <ArrowRight size={20} />
+                </motion.button>
+              </Link>
+              
+              <a 
+                href={profile?.resume_url || "/Aditya_Pandey_Resume.pdf"} 
+                download={`${profile?.full_name || "Aditya_Pandey"}_Resume.pdf`}
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="contents"
               >
-                View Portfolio
-                <ArrowRight size={20} />
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-full font-semibold border border-white/20 hover:bg-white/20 transition-colors"
-              >
-                Download CV
-              </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-full font-semibold border border-white/20 hover:bg-white/20 transition-colors"
+                >
+                  Download CV
+                </motion.button>
+              </a>
             </motion.div>
           </motion.div>
 
@@ -278,3 +292,4 @@ export function Hero() {
     </div>
   );
 }
+export default Hero;

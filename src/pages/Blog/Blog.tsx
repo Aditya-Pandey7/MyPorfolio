@@ -1,290 +1,207 @@
 import { motion } from "motion/react";
-import { Calendar, Clock, ArrowRight, Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Calendar, ArrowRight, Sparkles, Loader2, BookOpen, ExternalLink, Link as LinkIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
-const blogPosts = [
-  {
-    title: "How React Works Under the Hood",
-    date: "Aug 3, 2025",
-    category: "React",
-    image:
-      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=600&fit=crop",
-    excerpt:
-      "An in-depth look at how React operates internally, including DOM its virtual DOM and reconciliation process , React Fiber , Diffing Algorithms .",
-    link: "https://medium.com/@captain-adi/how-react-works-under-the-hood-683ce807d1df",
-  },
-  {
-    title: "Setup react-router-dom",
-    date: "Aug 26, 2024",
-    category: "React",
-    image:
-      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=600&fit=crop",
-    excerpt:
-      "A guide on how to set up react-router-dom in your React application in an efficient way for your large-scale applications.",
-    link: "https://medium.com/@captain-adi/️setup-react-router-7e240c5b1264",
-  },
-  {
-    title: "Send Form Data from Frontend to Backend",
-    date: "Mar 11, 2025",
-    category: "MERN Stack",
-    image:
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&h=600&fit=crop",
-    excerpt:
-      "Learn how to send form data from your React frontend to a backend server in MERN stack.",
-    link: "https://medium.com/@captain-adi/how-to-send-data-from-frontend-to-backend-using-a-form-39413f165e46",
-  },
-];
-
-// const blogPosts = [
-//   {
-//     title: "Getting Started with React 19",
-//     excerpt:
-//       "Explore the latest features and improvements in React 19, including automatic batching, transitions, and more.",
-//     date: "Feb 20, 2026",
-//     readTime: "5 min read",
-//     category: "React",
-//     image:
-//       "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=600&fit=crop",
-//   },
-//   {
-//     title: "Mastering Tailwind CSS",
-//     excerpt:
-//       "Learn how to build beautiful, responsive designs with Tailwind CSS utility classes and custom configurations.",
-//     date: "Feb 18, 2026",
-//     readTime: "8 min read",
-//     category: "CSS",
-//     image:
-//       "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=800&h=600&fit=crop",
-//   },
-//   {
-//     title: "Building Scalable APIs with Node.js",
-//     excerpt:
-//       "Best practices for creating robust, scalable REST APIs using Node.js and Express.js framework.",
-//     date: "Feb 15, 2026",
-//     readTime: "10 min read",
-//     category: "Backend",
-//     image:
-//       "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=600&fit=crop",
-//   },
-//   {
-//     title: "TypeScript Tips and Tricks",
-//     excerpt:
-//       "Discover advanced TypeScript patterns and techniques to write more maintainable and type-safe code.",
-//     date: "Feb 12, 2026",
-//     readTime: "6 min read",
-//     category: "TypeScript",
-//     image:
-//       "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&h=600&fit=crop",
-//   },
-//   {
-//     title: "Web Performance Optimization",
-//     excerpt:
-//       "Techniques and strategies to improve your website's loading speed and overall performance.",
-//     date: "Feb 10, 2026",
-//     readTime: "7 min read",
-//     category: "Performance",
-//     image:
-//       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
-//   },
-//   {
-//     title: "Modern UI/UX Design Principles",
-//     excerpt:
-//       "Essential design principles for creating intuitive and engaging user experiences in modern web applications.",
-//     date: "Feb 8, 2026",
-//     readTime: "9 min read",
-//     category: "Design",
-//     image:
-//       "https://images.unsplash.com/photo-1763833294545-e38e4fab1961?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9nJTIwd3JpdGluZyUyMGNyZWF0aXZlJTIwd29ya3NwYWNlfGVufDF8fHx8MTc3MjAwODYwMnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-//   },
-// ];
+interface Blog {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt: string;
+  cover_image: string;
+  external_url: string;
+  tags: string[];
+  published_at: string;
+}
 
 export function Blogs() {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchBlogs() {
+      try {
+        const { data, error } = await supabase
+          .from('blogs')
+          .select('*')
+          .order('published_at', { ascending: false });
+
+        if (error) throw error;
+        setBlogs(data || []);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchBlogs();
+  }, []);
+
   return (
-    <div className="pt-16 min-h-screen bg-black">
+    <div className="pt-16 min-h-screen bg-black text-white font-sans">
       <section className="relative min-h-screen py-20 overflow-hidden">
         {/* Animated background */}
         <div className="absolute inset-0">
           <motion.div
             animate={{
               background: [
-                "radial-gradient(circle at 30% 50%, rgba(251, 146, 60, 0.15) 0%, transparent 50%)",
-                "radial-gradient(circle at 70% 50%, rgba(251, 146, 60, 0.15) 0%, transparent 50%)",
-                "radial-gradient(circle at 30% 50%, rgba(251, 146, 60, 0.15) 0%, transparent 50%)",
+                "radial-gradient(circle at 30% 50%, rgba(251, 146, 60, 0.1) 0%, transparent 50%)",
+                "radial-gradient(circle at 70% 50%, rgba(251, 146, 60, 0.1) 0%, transparent 50%)",
+                "radial-gradient(circle at 30% 50%, rgba(251, 146, 60, 0.1) 0%, transparent 50%)",
               ],
             }}
-            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
             className="absolute inset-0"
           />
         </div>
 
         {/* Grid overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:80px_80px]" />
-
-        {/* Floating particles */}
-        {[...Array(12)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-orange-400 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              opacity: [0.2, 0.6, 0.2],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Header */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-20 text-white">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-orange-500/10 backdrop-blur-sm rounded-full border border-orange-500/20 mb-6"
+              className="inline-flex items-center gap-2 px-5 py-2 bg-orange-500/10 backdrop-blur-xl rounded-full border border-orange-500/20 mb-8"
             >
               <Sparkles size={16} className="text-orange-400" />
-              <span className="text-orange-300 text-sm">Blog & Articles</span>
+              <span className="text-orange-300 text-sm font-bold uppercase tracking-widest">Digital Chronicles</span>
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-5xl md:text-7xl font-bold mb-6"
+              transition={{ delay: 0.1 }}
+              className="text-6xl md:text-8xl font-black mb-8 tracking-tighter uppercase"
             >
-              <span className="text-white">Latest </span>
-              <span className="bg-gradient-to-r from-orange-400 via-red-400 to-pink-400 bg-clip-text text-transparent">
-                Thoughts
+              LATEST <br />
+              <span className="bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 bg-clip-text text-transparent">
+                INSIGHTS
               </span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-xl text-gray-400 max-w-2xl mx-auto"
+              transition={{ delay: 0.2 }}
+              className="text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed"
             >
-              Insights, tutorials, and thoughts on web development and design
+              Exploring the frontiers of technology, design, and creative coding through in-depth articles and tutorials.
             </motion.p>
           </div>
 
           {/* Blog Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post, index) => (
-              <motion.article
-                key={post.title}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -10 }}
-                className="group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/50 hover:border-orange-500/50 transition-all duration-300 cursor-pointer"
-              >
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden bg-gray-800">
-                  <motion.img
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent" />
+          {loading ? (
+            <div className="flex justify-center items-center py-40">
+              <div className="flex flex-col items-center gap-4">
+                <Loader2 className="animate-spin text-orange-500" size={48} />
+                <p className="text-sm font-bold text-zinc-500 uppercase tracking-widest">Decrypting data...</p>
+              </div>
+            </div>
+          ) : blogs.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+              {blogs.map((post, index) => (
+                <motion.article
+                  key={post.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ y: -12 }}
+                  className="group relative bg-zinc-900/40 backdrop-blur-xl rounded-[2.5rem] overflow-hidden border border-white/5 hover:border-orange-500/30 transition-all duration-500"
+                >
+                  {/* Image Container */}
+                  <div className="relative h-64 overflow-hidden bg-zinc-800">
+                    {post.cover_image ? (
+                      <motion.img
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.8 }}
+                        src={post.cover_image}
+                        alt={post.title}
+                        className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center text-zinc-700">
+                        <BookOpen size={64} />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent opacity-80" />
 
-                  {/* Category badge */}
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-orange-500/90 backdrop-blur-sm text-white text-xs font-semibold rounded-full">
-                      {post.category}
-                    </span>
-                  </div>
-
-                  {/* Shine effect */}
-                  <motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  {/* Meta info */}
-                  <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
-                    <div className="flex items-center gap-1">
-                      <Calendar size={14} />
-                      <span>{post.date}</span>
+                    {/* Meta Badge */}
+                    <div className="absolute top-6 left-6 flex gap-2">
+                        {post.tags?.slice(0, 1).map((tag, i) => (
+                            <span key={i} className="px-4 py-1.5 bg-white/10 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-widest rounded-full border border-white/10">
+                            {tag}
+                            </span>
+                        ))}
                     </div>
-                    <div className="flex items-center gap-1">
-                      <Clock size={14} />
+
+                    {/* Link Icon */}
+                    <div className="absolute top-6 right-6">
+                        <div className="p-2.5 rounded-full bg-orange-500 text-white shadow-xl shadow-orange-500/20 group-hover:scale-110 transition-transform">
+                           {post.external_url ? <ExternalLink size={16} /> : <LinkIcon size={16} />}
+                        </div>
                     </div>
                   </div>
 
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-orange-400 transition-colors">
-                    {post.title}
-                  </h3>
+                  {/* Content */}
+                  <div className="p-8 pt-6">
+                    {/* Meta info */}
+                    <div className="flex items-center gap-4 text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-4">
+                      <div className="flex items-center gap-1.5">
+                        <Calendar size={12} className="text-orange-500" />
+                        <span>{new Date(post.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                      </div>
+                      <div className="h-1 w-1 rounded-full bg-zinc-800" />
+                    
+                    </div>
 
-                  {/* Excerpt */}
-                  <p className="text-gray-400 text-sm leading-relaxed mb-4">
-                    {post.excerpt}
-                  </p>
+                    {/* Title */}
+                    <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-orange-400 transition-colors leading-tight line-clamp-2">
+                      {post.title}
+                    </h3>
 
-                  {/* Read more link */}
-                  <div className="flex items-center gap-2 text-orange-400 font-semibold">
-                    <Link
-                      to={`${post.link}`}
-                      className="flex items-center gap-2"
-                    >
-                      <span className="text-sm">Read More</span>
-                    </Link>
-                    <motion.div
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        repeatDelay: 1,
-                      }}
-                    >
-                      <ArrowRight size={16} />
-                    </motion.div>
+                    {/* Excerpt */}
+                    <p className="text-zinc-400 text-sm leading-relaxed mb-6 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+
+                    {/* Footer Action */}
+                    <div className="pt-6 border-t border-white/5 flex items-center justify-between">
+                      <a
+                        href={post.external_url || `/blog/${post.slug}`}
+                        target={post.external_url ? "_blank" : "_self"}
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 text-white group/btn"
+                      >
+                        <span className="text-xs font-black uppercase tracking-tighter">Read Full Story</span>
+                        <div className="p-2 rounded-full bg-zinc-800 group-hover/btn:bg-orange-500 group-hover/btn:translate-x-1 transition-all duration-300">
+                           <ArrowRight size={14} />
+                        </div>
+                      </a>
+                    </div>
                   </div>
-                </div>
-
-                {/* Bottom accent line */}
-                <motion.div
-                  initial={{ scaleX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className="h-1 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 origin-left"
-                />
-              </motion.article>
-            ))}
-          </div>
-
-          {/* Load More Button */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-center mt-12"
-          >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-full font-semibold shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 transition-shadow"
-            >
-              Load More Articles
-            </motion.button>
-          </motion.div>
+                </motion.article>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-40">
+                <BookOpen size={48} className="mx-auto text-zinc-800 mb-6" />
+                <h2 className="text-2xl font-bold text-zinc-500">No articles found.</h2>
+                <p className="text-zinc-600 mt-2">Check back later for fresh content!</p>
+            </div>
+          )}
         </div>
 
         {/* Decorative blur elements */}
-        <div className="absolute top-1/4 left-0 w-96 h-96 bg-orange-500/10 rounded-full filter blur-3xl" />
-        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-red-500/10 rounded-full filter blur-3xl" />
+        <div className="absolute top-1/4 -left-20 w-[30rem] h-[30rem] bg-orange-500/5 rounded-full filter blur-[100px]" />
+        <div className="absolute bottom-1/4 -right-20 w-[30rem] h-[30rem] bg-red-500/5 rounded-full filter blur-[100px]" />
       </section>
     </div>
   );
 }
+

@@ -1,27 +1,44 @@
 import { motion } from "motion/react";
-import { ExternalLink, ArrowRight, Sparkles } from "lucide-react";
+import { ExternalLink, ArrowRight, Sparkles, Loader2 } from "lucide-react";
 import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
-const featuredProjects = [
-  {
-    title: "The Movie DB",
-    description:
-      "This is a movie database application that fetches data from TMDB API.",
-    image: "./TMDB.webp",
-    link: "https://tmdb-topaz-sigma.vercel.app/",
-  },
-  {
-    title: "Mintra - E-commerce Platform",
-    description:
-      "This is a brief description of Project Two. It showcases the main features and technologies used.",
-    image: "./ecom.avif",
-    link: "https://myntra-jade.vercel.app/",
-  },
-];
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  image_url: string;
+  live_url: string;
+}
 
-export function FeaturedProjects() {
+function FeaturedProjects() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchFeaturedProjects() {
+      try {
+        const { data, error } = await supabase
+          .from('projects')
+          .select('id, title, description, image_url, live_url')
+          .order('created_at', { ascending: false })
+          .limit(2);
+
+        if (error) throw error;
+        setProjects(data || []);
+      } catch (error) {
+        console.error("Error fetching featured projects:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchFeaturedProjects();
+  }, []);
+
   return (
-    <section className="relative  bg-black py-20 overflow-hidden">
+    <section className="relative bg-black py-20 overflow-hidden">
       {/* Animated background */}
       <div className="absolute inset-0">
         <motion.div
@@ -79,124 +96,132 @@ export function FeaturedProjects() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          {featuredProjects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <motion.a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -10 }}
-                className="group block relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/50 hover:border-pink-500/50 transition-all duration-300"
+        {loading ? (
+          <div className="flex justify-center py-20">
+            <Loader2 className="animate-spin text-pink-500" size={48} />
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            {projects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                {/* Image Container */}
-                <div className="relative h-80 overflow-hidden bg-gray-800">
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                    className="w-full h-full"
-                  >
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src =
-                          "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop";
-                      }}
-                    />
-                  </motion.div>
-
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
-
-                  {/* Hover Effect - External Link Icon */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileHover={{ opacity: 1, scale: 1 }}
-                    className="absolute top-4 right-4 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
-                  >
-                    <ExternalLink size={20} className="text-gray-900" />
-                  </motion.div>
-
-                  {/* Shine effect */}
-                  <motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-2xl font-bold text-white group-hover:text-pink-400 transition-colors">
-                      {project.title}
-                    </h3>
+                <motion.a
+                  href={project.live_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -10 }}
+                  className="group block relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/50 hover:border-pink-500/50 transition-all duration-300 min-h-[500px]"
+                >
+                  {/* Image Container */}
+                  <div className="relative h-80 overflow-hidden bg-gray-800">
                     <motion.div
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        repeatDelay: 1,
-                      }}
-                      className="opacity-0 group-hover:opacity-100 transition-opacity"
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-full h-full"
                     >
-                      <ArrowRight size={24} className="text-pink-400" />
+                      <img
+                        src={project.image_url}
+                        alt={project.title}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src =
+                            "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop";
+                        }}
+                      />
                     </motion.div>
-                  </div>
 
-                  <p className="text-gray-400 leading-relaxed mb-4">
-                    {project.description}
-                  </p>
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
 
-                  {/* Decorative line */}
-                  <div className="flex items-center gap-2">
+                    {/* Hover Effect - External Link Icon */}
                     <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: "100%" }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.8, delay: 0.3 + index * 0.1 }}
-                      className="h-px bg-gradient-to-r from-pink-500 via-purple-500 to-transparent"
-                    />
-                  </div>
-                </div>
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileHover={{ opacity: 1, scale: 1 }}
+                      className="absolute top-4 right-4 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                    >
+                      <ExternalLink size={20} className="text-gray-900" />
+                    </motion.div>
 
-                {/* Bottom accent line */}
-                <motion.div
-                  initial={{ scaleX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className="h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 origin-left"
-                />
-              </motion.a>
-            </motion.div>
-          ))}
-        </div>
+                    {/* Shine effect */}
+                    <motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-3">
+                      <h3 className="text-2xl font-bold text-white group-hover:text-pink-400 transition-colors uppercase tracking-tight">
+                        {project.title}
+                      </h3>
+                      <motion.div
+                        animate={{ x: [0, 5, 0] }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          repeatDelay: 1,
+                        }}
+                        className="opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <ArrowRight size={24} className="text-pink-400" />
+                      </motion.div>
+                    </div>
+
+                    <p className="text-gray-400 leading-relaxed mb-4 line-clamp-3">
+                      {project.description}
+                    </p>
+
+                    {/* Decorative line */}
+                    <div className="flex items-center gap-2 mt-auto">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: "100%" }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.3 + index * 0.1 }}
+                        className="h-px bg-gradient-to-r from-pink-500 via-purple-500 to-transparent"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Bottom accent line */}
+                  <motion.div
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 origin-left"
+                  />
+                </motion.a>
+              </motion.div>
+            ))}
+          </div>
+        )}
 
         {/* View All Projects Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center"
-        >
-          <Link to="/projects">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full font-semibold flex items-center gap-2 mx-auto shadow-lg shadow-pink-500/25 hover:shadow-pink-500/40 transition-shadow"
-            >
-              View All Projects
-              <ArrowRight size={20} />
-            </motion.button>
-          </Link>
-        </motion.div>
+        {!loading && projects.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-center"
+          >
+            <Link to="/projects">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-full font-semibold flex items-center gap-2 mx-auto shadow-lg shadow-pink-500/25 hover:shadow-pink-500/40 transition-shadow"
+              >
+                View All Projects
+                <ArrowRight size={20} />
+              </motion.button>
+            </Link>
+          </motion.div>
+        )}
       </div>
 
       {/* Decorative blur elements */}
@@ -205,3 +230,5 @@ export function FeaturedProjects() {
     </section>
   );
 }
+export default FeaturedProjects;
+

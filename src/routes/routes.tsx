@@ -1,6 +1,9 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router";
 import App from "@/App";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
+import ProtectedRoute from "@/components/admin/ProtectedRoute";
+import Login from "@/pages/admin/Login";
 
 // Lazy load components
 const Home = lazy(() => import("@/pages/Home/Home").then(module => ({ default: module.Home })));
@@ -9,6 +12,7 @@ const Stack = lazy(() => import("@/pages/Stacks/Stacks").then(module => ({ defau
 const Blogs = lazy(() => import("@/pages/Blog/Blog").then(module => ({ default: module.Blogs })));
 const Contact = lazy(() => import("@/pages/Contact/Contact").then(module => ({ default: module.Contact })));
 const Me = lazy(() => import("@/pages/Me/Me"));
+const NotFound = lazy(() => import("@/pages/NotFound/NotFound"));
 
 const router = createBrowserRouter([
   {
@@ -63,6 +67,32 @@ const router = createBrowserRouter([
           </Suspense>
         ) 
       },
+      { 
+        path: "admin", 
+        element: (
+          <Suspense fallback={null}>
+             <ProtectedRoute>
+                <AdminDashboard />
+             </ProtectedRoute>
+          </Suspense>
+        ) 
+      },  
+      { 
+        path: "login", 
+        element: (
+          <Suspense fallback={null}>
+            <Login />
+          </Suspense>
+        ) 
+      },  
+      {
+        path: "*",
+        element: (
+          <Suspense fallback={null}>
+            <NotFound />
+          </Suspense>
+        )
+      }
     ],
   },
 ]);

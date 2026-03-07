@@ -2,16 +2,18 @@ import { memo } from "react";
 import { motion } from "motion/react";
 import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 import { useTheme } from "@/context/ThemeProvider";
-
-const socialLinks = [
-  { icon: Github, href: "https://github.com/Aditya-Pandey7", label: "GitHub" },
-  { icon: Linkedin, href: "https://www.linkedin.com/in/aditya-pandey-070447233", label: "LinkedIn" },
-  { icon: Twitter, href: "https://x.com/adi_iox", label: "Twitter" },
-  { icon: Mail, href: "mailto:adipandey830@gmail.com", label: "Email" },
-];
+import { useProfile } from "@/context/ProfileContext";
 
 const Footer = memo(function Footer() {
   const { theme } = useTheme();
+  const { profile } = useProfile();
+
+  const socialLinks = [
+    { icon: Github, href: profile?.github_url || "https://github.com/Aditya-Pandey7", label: "GitHub" },
+    { icon: Linkedin, href: profile?.linkedin_url || "https://www.linkedin.com/in/aditya-pandey-070447233", label: "LinkedIn" },
+    { icon: Twitter, href: profile?.twitter_url || "https://x.com/adi_iox", label: "Twitter" },
+    { icon: Mail, href: `mailto:${profile?.email || "adipandey830@gmail.com"}`, label: "Email" },
+  ];
   
   return (
     <footer className="relative bg-black pt-16 pb-12 overflow-hidden">
@@ -30,7 +32,7 @@ const Footer = memo(function Footer() {
           <span>
             Crafted with passion by{" "}
             <span className={`font-bold ${theme === "dark" ? "text-white" : "text-black"} transition-colors`}>
-              Aditya Pandey
+              {profile?.full_name || "Aditya Pandey"}
             </span>
           </span>
         </motion.div>

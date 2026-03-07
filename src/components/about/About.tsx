@@ -2,8 +2,10 @@ import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, Code2, Rocket, Sparkles } from "lucide-react";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { useProfile } from "@/context/ProfileContext";
 
  function About() {
+  const { profile } = useProfile();
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -145,12 +147,9 @@ import { Link } from "react-router-dom";
               className="space-y-4 text-gray-300 text-lg leading-relaxed mb-8"
             >
               <p>
-                I'm <span className="text-white font-bold">Aditya Pandey</span>, a
-                Frontend Architect based in Bilaspur, India, with a deep-rooted
-                passion for building high-performance web applications. My
-                journey in technology started during my <span className="text-purple-400">BCA at Govt E Raghavendra Rao Science College</span>,
-                where I discovered the power of code to transform ideas into
-                extraordinary digital realities.
+                I'm <span className="text-white font-bold">{profile?.full_name || "Aditya Pandey"}</span>, a
+                Frontend Architect based in <span className="text-white">{profile?.location || "Bilaspur, India"}</span>, with a deep-rooted
+                passion for building high-performance web applications. {profile?.bio || `My journey in technology started during my ${profile?.education || "BCA at Govt E Raghavendra Rao Science College"}, where I discovered the power of code to transform ideas into extraordinary digital realities.`}
               </p>
               <p>
                 Specializing in the <span className="text-purple-400 font-semibold">React ecosystem</span>,
@@ -159,12 +158,6 @@ import { Link } from "react-router-dom";
                 micro-interaction should tell a story. Whether it's optimizing
                 bundle sizes or perfecting state management, I strive for
                 technical excellence in every project.
-              </p>
-              <p>
-                I don't just build websites; I craft immersive digital
-                experiences that resonate. I'm constantly exploring the edges of
-                frontend engineering, staying ahead of the curve to deliver
-                solutions that are as performant as they are beautiful.
               </p>
             </motion.div>
 

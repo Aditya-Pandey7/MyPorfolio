@@ -1,8 +1,10 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { GraduationCap, Target, Code2, Sparkles, BookOpen, Star, Briefcase } from "lucide-react";
 import { useRef } from "react";
+import { useProfile } from "@/context/ProfileContext";
 
 export default function Me() {
+  const { profile } = useProfile();
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -110,11 +112,9 @@ export default function Me() {
               </div>
               
               <p className="text-gray-400 leading-relaxed text-xl font-medium">
-                Hello! I'm <span className="text-white">Aditya Pandey</span>, a high-performance 
+                Hello! I'm <span className="text-white">{profile?.full_name || "Aditya Pandey"}</span>, a high-performance 
                 <span className="text-purple-400"> Frontend Architect</span> dedicated 
-                to pushing the boundaries of web experiences. I specialize in crafting 
-                dynamic, visually arresting digital landscapes that prioritize speed 
-                and pixel-perfect precision.
+                to pushing the boundaries of web experiences. {profile?.bio || "I specialize in crafting dynamic, visually arresting digital landscapes that prioritize speed and pixel-perfect precision."}
               </p>
             </div>
           </motion.div>
@@ -134,9 +134,9 @@ export default function Me() {
               </div>
               <h3 className="text-2xl font-black text-white mb-4 uppercase">Education</h3>
               <div className="space-y-2">
-                <h4 className="text-lg font-bold text-white">BCA Degree</h4>
-                <p className="text-blue-400 font-semibold italic text-sm">Govt E Raghavendra Rao Science College</p>
-                <p className="text-gray-500 text-sm">Bilaspur, Chhattisgarh, India</p>
+                <h4 className="text-lg font-bold text-white">Academic Foundation</h4>
+                <p className="text-blue-400 font-semibold italic text-sm">{profile?.education || "BCA Degree at Govt E Raghavendra Rao Science College"}</p>
+                <p className="text-gray-500 text-sm">{profile?.location || "Bilaspur, Chhattisgarh, India"}</p>
               </div>
             </motion.div>
 
@@ -153,9 +153,9 @@ export default function Me() {
               </div>
               <h3 className="text-2xl font-black text-white mb-4 uppercase">Background</h3>
               <p className="text-gray-400 leading-relaxed font-medium">
-                Native to <span className="text-white">Bilaspur</span>, my passion 
-                for engineering complex digital systems was born from a curiosity 
-                about how the web could be more interactive and alive.
+                Native to <span className="text-white">{profile?.location?.split(',')[0] || "Bilaspur"}</span>, my journey 
+                evolved from a curiosity about complex digital systems to a deep expertise 
+                in building high-performance web applications that live and breathe.
               </p>
             </motion.div>
           </div>

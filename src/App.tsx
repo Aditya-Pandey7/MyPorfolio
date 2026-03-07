@@ -75,10 +75,19 @@ const items = [
 
 function App() {
   const { pathname } = useLocation();
+  const isAdminPage = pathname.startsWith('/admin') || pathname === '/login';
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  if (isAdminPage) {
+    return (
+      <main className="flex-1 flex flex-col min-h-screen bg-zinc-950">
+        <Outlet />
+      </main>
+    );
+  }
 
   return (
     <>

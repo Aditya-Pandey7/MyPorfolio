@@ -42,7 +42,7 @@ const CardNav: React.FC<CardNavProps> = ({
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
 
-  const calculateHeight = () => {
+  const calculateHeight = React.useCallback(() => {
     const navEl = navRef.current;
     if (!navEl) return 260;
 
@@ -60,7 +60,8 @@ const CardNav: React.FC<CardNavProps> = ({
         contentEl.style.position = "static";
         contentEl.style.height = "auto";
 
-        contentEl.offsetHeight;
+        // Trigger reflow safely
+        void contentEl.offsetHeight;
 
         const topBar = 60;
         const padding = 16;
@@ -75,9 +76,9 @@ const CardNav: React.FC<CardNavProps> = ({
       }
     }
     return 260;
-  };
+  }, []);
 
-  const createTimeline = () => {
+  const createTimeline = React.useCallback(() => {
     const navEl = navRef.current;
     if (!navEl) return null;
 
@@ -99,7 +100,7 @@ const CardNav: React.FC<CardNavProps> = ({
     );
 
     return tl;
-  };
+  }, [calculateHeight, ease]);
 
   useLayoutEffect(() => {
     const tl = createTimeline();
@@ -115,7 +116,7 @@ const CardNav: React.FC<CardNavProps> = ({
       tl?.kill();
       tlRef.current = null;
     };
-  }, [ease, items]);
+  }, [createTimeline, isExpanded]);
 
   useLayoutEffect(() => {
     const handleResize = () => {
@@ -142,7 +143,7 @@ const CardNav: React.FC<CardNavProps> = ({
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [isExpanded]);
+  }, [calculateHeight, createTimeline, isExpanded]);
 
   const closeMenu = () => {
     const tl = tlRef.current;

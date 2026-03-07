@@ -33,8 +33,10 @@ import {
   Twitter,
 } from "lucide-react";
 import { useState } from "react";
+import { useProfile } from "@/context/ProfileContext";
 
 export function Contact() {
+  const { profile } = useProfile();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -61,21 +63,21 @@ export function Contact() {
     {
       icon: Mail,
       title: "Email",
-      value: "adipandey830@gmail.com",
+      value: profile?.email || "adipandey830@gmail.com",
       color: "text-purple-400",
       bgColor: "bg-purple-500/10",
     },
     {
       icon: Phone,
       title: "Phone",
-      value: "+91 9171977959",
+      value: profile?.phone || "+91 9171977959",
       color: "text-pink-400",
       bgColor: "bg-pink-500/10",
     },
     {
       icon: MapPin,
       title: "Location",
-      value: "Bilaspur ,Chattisgarh, India",
+      value: profile?.location || "Bilaspur, Chattisgarh, India",
       color: "text-orange-400",
       bgColor: "bg-orange-500/10",
     },
@@ -85,25 +87,25 @@ export function Contact() {
     {
       icon: Github,
       label: "Github",
-      href: "https://github.com/Aditya-Pandey7",
+      href: profile?.github_url || "https://github.com/Aditya-Pandey7",
       color: "hover:text-purple-400",
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
-      href: "https://www.linkedin.com/in/aditya-pandey-070447233",
+      href: profile?.linkedin_url || "https://www.linkedin.com/in/aditya-pandey-070447233",
       color: "hover:text-blue-400",
     },
     {
       icon: Twitter,
       label: "Twitter",
-      href: "https://x.com/adi_iox",
+      href: profile?.twitter_url || "https://x.com/adi_iox",
       color: "hover:text-cyan-400",
     },
     {
       icon: Mail,
       label: "Email",
-      href: "mailto:adipandey830@gmail.com",
+      href: `mailto:${profile?.email || "adipandey830@gmail.com"}`,
       color: "hover:text-pink-400",
     },
   ];
